@@ -1,1 +1,349 @@
-<h1><hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nathan's Game Arcade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
+            padding: 20px;
+        }
+
+        /* Floating shapes background */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) { top: 10%; left: 10%; font-size: 80px; animation-delay: 0s; }
+        .shape:nth-child(2) { top: 20%; left: 80%; font-size: 60px; animation-delay: -5s; }
+        .shape:nth-child(3) { top: 60%; left: 15%; font-size: 70px; animation-delay: -10s; }
+        .shape:nth-child(4) { top: 70%; left: 70%; font-size: 90px; animation-delay: -15s; }
+        .shape:nth-child(5) { top: 40%; left: 50%; font-size: 50px; animation-delay: -7s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(20px) rotate(-5deg); }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 4px 4px 0 #ff6b6b, 8px 8px 0 rgba(0,0,0,0.1);
+            letter-spacing: 2px;
+            animation: bounce 2s infinite;
+        }
+
+        .logo span {
+            display: inline-block;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .logo span:nth-child(2) { animation-delay: 0.1s; }
+        .logo span:nth-child(3) { animation-delay: 0.2s; }
+        .logo span:nth-child(4) { animation-delay: 0.3s; }
+        .logo span:nth-child(5) { animation-delay: 0.4s; }
+        .logo span:nth-child(6) { animation-delay: 0.5s; }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .game-count {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-top: 15px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+        }
+
+        /* Games Grid */
+        .games-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        /* Game Card */
+        .game-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid #f0f0f0;
+        }
+
+        .game-info {
+            padding: 20px;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+
+        .game-description {
+            color: #636e72;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .game-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .play-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .play-btn:hover {
+            background: linear-gradient(135deg, #00cec9, #00b894);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,184,148,0.4);
+        }
+
+        .play-btn::before {
+            content: '>';
+            margin-right: 10px;
+            display: inline-block;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* New badge */
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        .creator {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .logo {
+                font-size: 2.2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .games-container {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating background shapes -->
+    <div class="bg-shapes">
+        <div class="shape">&#127918;</div>
+        <div class="shape">&#11088;</div>
+        <div class="shape">&#127775;</div>
+        <div class="shape">&#127942;</div>
+        <div class="shape">&#128293;</div>
+    </div>
+
+    <header>
+        <h1 class="logo">
+            <span>N</span><span>A</span><span>T</span><span>H</span><span>A</span><span>N</span>'S
+            GAME ARCADE
+        </h1>
+        <p class="subtitle">Where imagination becomes playable!</p>
+        <div class="game-count" id="gameCount">Loading games...</div>
+    </header>
+
+    <main class="games-container" id="gamesGrid">
+        <!-- Games will be loaded here by JavaScript -->
+    </main>
+
+    <footer>
+        <p class="creator">Created by Nathan, age 9</p>
+        <p>Game Developer Extraordinaire</p>
+    </footer>
+
+    <script>
+        // ===========================================
+        // GAMES LIST - Add new games here!
+        // ===========================================
+        const games = [
+            {
+                title: "Fruit Escape",
+                description: "Run for the orchard! Race your fruits to freedom in this exciting escape game. How many fruits can you save?",
+                image: "fruit-escape.png",
+                url: "https://fruit-escape-the-great-juicing-1038056808379.us-west1.run.app",
+                tags: ["Racing", "Fruits", "Fun"],
+                isNew: true
+            },
+            // Add more games below! Copy this template:
+            // {
+            //     title: "Game Name",
+            //     description: "What the game is about",
+            //     image: "screenshot.png",
+            //     url: "https://game-url.com",
+            //     tags: ["Tag1", "Tag2"],
+            //     isNew: false
+            // },
+        ];
+
+        // ===========================================
+        // Render games - Don't modify below unless needed
+        // ===========================================
+        function renderGames() {
+            const grid = document.getElementById('gamesGrid');
+            const countEl = document.getElementById('gameCount');
+
+            countEl.textContent = `${games.length} Game${games.length !== 1 ? 's' : ''} Ready to Play!`;
+
+            grid.innerHTML = games.map(game => `
+                <article class="game-card" onclick="window.open('${game.url}', '_blank')">
+                    ${game.isNew ? '<span class="new-badge">NEW!</span>' : ''}
+                    <img src="${game.image}" alt="${game.title}" class="game-image">
+                    <div class="game-info">
+                        <h2 class="game-title">${game.title}</h2>
+                        <p class="game-description">${game.description}</p>
+                        <div class="game-tags">
+                            ${game.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <a href="${game.url}" target="_blank" class="play-btn" onclick="event.stopPropagation()">
+                            Play Now
+                        </a>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Initialize
+        renderGames();
+    </script>
+</body>
+</html>
