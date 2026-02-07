@@ -176,6 +176,15 @@
             font-weight: 600;
         }
 
+        .game-date {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #b2bec3;
+            text-align: right;
+            font-style: italic;
+        }
+
         .play-btn {
             display: block;
             width: 100%;
@@ -297,12 +306,22 @@
         // ===========================================
         const games = [
             {
+                title: "Alien Invasion",
+                description: "Defend Earth from the extraterrestrial threat! Choose your team of astronauts and outsmart the AI or your friends in this strategic space mission.",
+                image: "alien-invasion.png",
+                url: "https://alien-invasion-1038056808379.us-west1.run.app",
+                tags: ["Space", "Strategy", "Multiplayer"],
+                date: "2026-02-07",
+                isNew: true
+            },
+            {
                 title: "Fruit Escape",
                 description: "Run for the orchard! Race your fruits to freedom in this exciting escape game. How many fruits can you save?",
                 image: "fruit-escape.png",
                 url: "https://fruit-escape-the-great-juicing-1038056808379.us-west1.run.app",
                 tags: ["Racing", "Fruits", "Fun"],
-                isNew: true
+                date: "2026-02-01",
+                isNew: false
             },
             // Add more games below! Copy this template:
             // {
@@ -311,6 +330,7 @@
             //     image: "screenshot.png",
             //     url: "https://game-url.com",
             //     tags: ["Tag1", "Tag2"],
+            //     date: "YYYY-MM-DD",
             //     isNew: false
             // },
         ];
@@ -334,6 +354,7 @@
                         <div class="game-tags">
                             ${game.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                         </div>
+                        <div class="game-date">Created: ${new Date(game.date).toLocaleDateString()}</div>
                         <a href="${game.url}" target="_blank" class="play-btn" onclick="event.stopPropagation()">
                             Play Now
                         </a>
