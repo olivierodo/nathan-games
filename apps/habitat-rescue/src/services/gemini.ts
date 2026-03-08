@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: "AIzaSyC-ZomYCj4xlSaTeK8pq1EJo8_jusleO8k" });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY ?? '' });
 
 export async function generateIntroSpeech(): Promise<ArrayBuffer | null> {
 	try {
