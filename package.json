@@ -1,0 +1,16 @@
+{
+  "name": "nathan-games",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build:all": "npm run build --workspaces && node scripts/collect-dist.mjs",
+    "build": "npm run build --workspaces",
+    "dev:alien-invasion": "npm --workspace apps/alien-invasion run dev",
+    "dev:fruit-escape": "npm --workspace apps/fruit-escape run dev",
+    "dev:habitat-rescue": "npm --workspace apps/habitat-rescue run dev",
+    "install:all": "npm install"
+  }
+}
