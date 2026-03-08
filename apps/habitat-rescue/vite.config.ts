@@ -65,8 +65,9 @@ export default defineConfig(({mode}) => {
   const apiKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   
   return {
+    base: '/habitat-rescue/',
     plugins: [
-      react(), 
+      react(),
       tailwindcss(),
       generateAudioPlugin(apiKey)
     ],
