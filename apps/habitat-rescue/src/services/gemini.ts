@@ -1,36 +1,17 @@
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY ?? '' });
+// Habitat Rescue - No API calls needed
+// Audio generation moved to build-time static assets
 
 export async function generateIntroSpeech(): Promise<ArrayBuffer | null> {
-	try {
-		const response = await ai.models.generateContent({
-			model: "gemini-2.5-flash-preview-tts",
-			contents: [{ parts: [{ text: "Welcome to Habitat Rescue. Avoid wolves, manage your water, and reach the goal to survive. Good luck!" }] }],
-			config: {
-				responseModalities: ["AUDIO"],
-				speechConfig: {
-					voiceConfig: {
-						prebuiltVoiceConfig: { voiceName: "Fenrir" }, // Deep, serious voice for survival game
-					},
-				},
-			},
-		});
-
-		const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-		if (base64Audio) {
-			// Convert base64 to ArrayBuffer
-			const binaryString = window.atob(base64Audio);
-			const len = binaryString.length;
-			const bytes = new Uint8Array(len);
-			for (let i = 0; i < len; i++) {
-				bytes[i] = binaryString.charCodeAt(i);
-			}
-			return bytes.buffer;
-		}
-		return null;
-	} catch (error) {
-		console.error("Error generating speech:", error);
-		return null;
-	}
+  // Load pre-generated intro audio from public/intro.wav
+  try {
+    const response = await fetch('/habitat-rescue/intro.wav');
+    if (!response.ok) {
+      console.warn("Intro audio not found, continuing without it");
+      return null;
+    }
+    return await response.arrayBuffer();
+  } catch (error) {
+    console.warn("Could not load intro audio:", error);
+    return null;
+  }
 }

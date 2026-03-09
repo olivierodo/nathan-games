@@ -1,106 +1,127 @@
-import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { RiddleData } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
-const GUARDIAN_PERSONAS = [
-  "a grumpy old Oak Tree who loves puns",
-  "a hyperactive Squirrel who talks very fast",
-  "a wise and sparkly Dragonfly",
-  "a mysterious glowing Mushroom from the deep woods",
-  "a friendly but competitive Strawberry who wants to see you win"
+// Pre-generated fruit and nature riddles
+const RIDDLE_POOL: RiddleData[] = [
+  {
+    riddle: "I'm a yellow fruit that monkeys love. I have no bones but am very soft. What am I?",
+    options: ["Banana", "Orange", "Apple"],
+    answer: "Banana",
+    explanation: "Bananas are yellow and soft fruit that monkeys are famous for eating!"
+  },
+  {
+    riddle: "I'm red and round, often found in a bowl. I keep the doctor away. What am I?",
+    options: ["Apple", "Cherry", "Strawberry"],
+    answer: "Apple",
+    explanation: "The saying goes 'An apple a day keeps the doctor away!'"
+  },
+  {
+    riddle: "I'm orange and full of vitamin C. I'm segmented like a puzzle. What am I?",
+    options: ["Orange", "Pumpkin", "Carrot"],
+    answer: "Orange",
+    explanation: "Oranges have segments and are packed with vitamin C!"
+  },
+  {
+    riddle: "I'm small and purple, I stain your fingers. I grow in bunches on a vine. What am I?",
+    options: ["Grape", "Blueberry", "Plum"],
+    answer: "Grape",
+    explanation: "Grapes grow in bunches and can stain your hands purple!"
+  },
+  {
+    riddle: "I'm a tropical fruit with a crown on top. I'm prickly outside but sweet inside. What am I?",
+    options: ["Pineapple", "Mango", "Papaya"],
+    answer: "Pineapple",
+    explanation: "Pineapples have a crown-like top and a spiky exterior!"
+  },
+  {
+    riddle: "I'm pink or red inside, but black and white outside. I'm refreshing on a hot day. What am I?",
+    options: ["Watermelon", "Pomegranate", "Dragon Fruit"],
+    answer: "Watermelon",
+    explanation: "Watermelons are perfect summer fruits with sweet pink flesh!"
+  },
+  {
+    riddle: "I'm small and red, with seeds on the outside. I grow on bushes and am very sweet. What am I?",
+    options: ["Strawberry", "Raspberry", "Cherry"],
+    answer: "Strawberry",
+    explanation: "Strawberries have seeds on the outside and are deliciously sweet!"
+  },
+  {
+    riddle: "I'm green on the outside, but brown inside. I'm hairy and from tropical places. What am I?",
+    options: ["Kiwi", "Avocado", "Coconut"],
+    answer: "Kiwi",
+    explanation: "Kiwis are fuzzy fruits with brown and green coloring!"
+  },
+  {
+    riddle: "I'm yellow when ripe and very creamy. I have a large pit in the middle. What am I?",
+    options: ["Avocado", "Banana", "Papaya"],
+    answer: "Avocado",
+    explanation: "Avocados are creamy fruits with a large central pit!"
+  },
+  {
+    riddle: "I'm dark purple and round. I grow on thorny bushes. What am I?",
+    options: ["Blackberry", "Blueberry", "Plum"],
+    answer: "Blackberry",
+    explanation: "Blackberries are purple and grow on prickly bushes!"
+  },
+  {
+    riddle: "I'm white inside and brown outside. I come from coconut palms. What am I?",
+    options: ["Coconut", "Kiwi", "Walnut"],
+    answer: "Coconut",
+    explanation: "Coconuts have a brown exterior and white flesh inside!"
+  },
+  {
+    riddle: "I'm sour and yellow. I'm cut into slices for drinks. What am I?",
+    options: ["Lemon", "Lime", "Grapefruit"],
+    answer: "Lemon",
+    explanation: "Lemons are sour yellow citrus fruits great for lemonade!"
+  },
+  {
+    riddle: "I'm blue and small. I grow in clusters on bushes. What am I?",
+    options: ["Blueberry", "Blackberry", "Grape"],
+    answer: "Blueberry",
+    explanation: "Blueberries are small blue berries that grow on bushes!"
+  },
+  {
+    riddle: "I'm bumpy and brown on the outside. I'm spiky and sweet inside. What am I?",
+    options: ["Pineapple", "Durian", "Rambutan"],
+    answer: "Pineapple",
+    explanation: "Pineapples have a bumpy brown exterior and sweet yellow flesh!"
+  },
+  {
+    riddle: "I'm pale green and pear-shaped. I have a large pit. What am I?",
+    options: ["Avocado", "Pear", "Kiwi"],
+    answer: "Avocado",
+    explanation: "Avocados are creamy green fruits with a big central pit!"
+  }
 ];
 
-export async function generateAllRiddles(traps: Array<{id: number, type: 'MISSILE' | 'BOMB'}>): Promise<Array<RiddleData & {squareId: number}>> {
-  const persona = GUARDIAN_PERSONAS[Math.floor(Math.random() * GUARDIAN_PERSONAS.length)];
-  const trapList = traps.map(t => `Square ${t.id} (${t.type})`).join(", ");
-  
-  const prompt = `Act as ${persona}. You are a guardian in the Orchard of Destiny.
-  I need riddles for a board game with ${traps.length} specific traps.
-  Generate exactly one unique nature/fruit-themed riddle for each of the following trap locations: ${trapList}.
-  
-  For each riddle:
-  1. It must be a multiple choice question with exactly 3 distinct options.
-  2. One option must be the correct answer. 
-  3. Include a fun, helpful explanation for why the answer is correct.
-  4. Ensure they are suitable for children.
-  
-  Return the response as a JSON array of objects, where each object has 'squareId' (matching the input) and the riddle fields.`;
-
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.ARRAY,
-          items: {
-            type: Type.OBJECT,
-            properties: {
-              squareId: { type: Type.INTEGER },
-              riddle: { type: Type.STRING },
-              options: { 
-                type: Type.ARRAY,
-                items: { type: Type.STRING }
-              },
-              answer: { type: Type.STRING },
-              explanation: { type: Type.STRING }
-            },
-            required: ["squareId", "riddle", "options", "answer", "explanation"]
-          }
-        }
-      }
-    });
-
-    return JSON.parse(response.text || '[]');
-  } catch (error) {
-    console.error("Error generating all riddles:", error);
-    // Fallback: Return some basic ones if the API fails
-    return traps.map(t => ({
-      squareId: t.id,
-      riddle: "I'm a fruit that's red and round, often found upon the ground. I have a core but no heart. What am I?",
-      options: ["Apple", "Orange", "Banana"],
-      answer: "Apple",
-      explanation: "Apples are crisp and delicious orchard favorites!"
-    }));
+// Shuffle array helper
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
+  return shuffled;
+};
+
+// Load riddles from pre-generated data (no API calls needed)
+export async function generateAllRiddles(traps: Array<{id: number, type: 'MISSILE' | 'BOMB'}>): Promise<Array<RiddleData & {squareId: number}>> {
+  const shuffled = shuffleArray(RIDDLE_POOL);
+  return traps.map((trap, index) => ({
+    squareId: trap.id,
+    ...shuffled[index % shuffled.length]
+  }));
 }
 
+// Silent audio fallback (no TTS needed)
 export async function generateAudio(text: string, audioContext: AudioContext): Promise<AudioBuffer | null> {
+  // Return empty audio buffer (silent)
+  // Games can still play without audio
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-preview-tts",
-      contents: [{ parts: [{ text: `Say clearly and with a magical forest character voice: ${text}` }] }],
-      config: {
-        responseModalities: [Modality.AUDIO],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Kore' },
-          },
-        },
-      },
-    });
-
-    const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-    if (base64Audio) {
-      const audioData = atob(base64Audio);
-      const arrayBuffer = new ArrayBuffer(audioData.length);
-      const view = new Uint8Array(arrayBuffer);
-      for (let i = 0; i < audioData.length; i++) {
-        view[i] = audioData.charCodeAt(i);
-      }
-      
-      const dataInt16 = new Int16Array(arrayBuffer);
-      const buffer = audioContext.createBuffer(1, dataInt16.length, 24000);
-      const channelData = buffer.getChannelData(0);
-      for (let i = 0; i < dataInt16.length; i++) {
-        channelData[i] = dataInt16[i] / 32768.0;
-      }
-      return buffer;
-    }
+    const buffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.5, audioContext.sampleRate);
+    return buffer;
   } catch (error) {
-    console.error("TTS generation failed", error);
+    console.warn("Audio not available:", error);
+    return null;
   }
-  return null;
 }

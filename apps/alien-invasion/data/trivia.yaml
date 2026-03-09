@@ -1,0 +1,160 @@
+questions:
+  - question: "Which planet is known as the Red Planet?"
+    options:
+      - "Venus"
+      - "Mars"
+      - "Jupiter"
+      - "Saturn"
+    correctAnswer: "Mars"
+
+  - question: "What is the name of our galaxy?"
+    options:
+      - "Andromeda"
+      - "Milky Way"
+      - "Whirlpool"
+      - "Sombrero"
+    correctAnswer: "Milky Way"
+
+  - question: "Who was the first person to walk on the moon?"
+    options:
+      - "Buzz Aldrin"
+      - "Yuri Gagarin"
+      - "Neil Armstrong"
+      - "Michael Collins"
+    correctAnswer: "Neil Armstrong"
+
+  - question: "Which planet is the largest in our solar system?"
+    options:
+      - "Mars"
+      - "Jupiter"
+      - "Saturn"
+      - "Neptune"
+    correctAnswer: "Jupiter"
+
+  - question: "What gives Mars its red color?"
+    options:
+      - "Fire"
+      - "Iron Rust"
+      - "Red Plants"
+      - "Volcanoes"
+    correctAnswer: "Iron Rust"
+
+  - question: "Which planet has beautiful rings around it?"
+    options:
+      - "Mars"
+      - "Venus"
+      - "Saturn"
+      - "Mercury"
+    correctAnswer: "Saturn"
+
+  - question: "What star is at the center of our solar system?"
+    options:
+      - "The Moon"
+      - "Alpha Centauri"
+      - "The Sun"
+      - "Betelgeuse"
+    correctAnswer: "The Sun"
+
+  - question: "How many moons does Earth have?"
+    options:
+      - "One"
+      - "Two"
+      - "Three"
+      - "None"
+    correctAnswer: "One"
+
+  - question: "What force keeps us on the ground?"
+    options:
+      - "Magnetism"
+      - "Gravity"
+      - "Friction"
+      - "Magic"
+    correctAnswer: "Gravity"
+
+  - question: "Which planet is closest to the Sun?"
+    options:
+      - "Venus"
+      - "Mercury"
+      - "Earth"
+      - "Mars"
+    correctAnswer: "Mercury"
+
+  - question: "What is a meteor shower?"
+    options:
+      - "Rain in space"
+      - "Stars falling from sky"
+      - "Many meteors entering atmosphere"
+      - "Ice in space"
+    correctAnswer: "Many meteors entering atmosphere"
+
+  - question: "Which planet spins on its side?"
+    options:
+      - "Uranus"
+      - "Mars"
+      - "Earth"
+      - "Jupiter"
+    correctAnswer: "Uranus"
+
+  - question: "What is a shooting star?"
+    options:
+      - "A Star"
+      - "A Comet"
+      - "A Meteor"
+      - "A Planet"
+    correctAnswer: "A Meteor"
+
+  - question: "Which planet is no longer considered a planet?"
+    options:
+      - "Pluto"
+      - "Mars"
+      - "Neptune"
+      - "Mercury"
+    correctAnswer: "Pluto"
+
+  - question: "How long does it take Earth to orbit the Sun?"
+    options:
+      - "1 Day"
+      - "1 Month"
+      - "1 Year"
+      - "10 Years"
+    correctAnswer: "1 Year"
+
+  - question: "What is the Big Bang?"
+    options:
+      - "A star explosion"
+      - "Beginning of the universe"
+      - "A black hole"
+      - "A meteor impact"
+    correctAnswer: "Beginning of the universe"
+
+  - question: "Which gas makes up most of Earth's atmosphere?"
+    options:
+      - "Oxygen"
+      - "Nitrogen"
+      - "Carbon Dioxide"
+      - "Hydrogen"
+    correctAnswer: "Nitrogen"
+
+  - question: "What is the name of our sun's solar wind?"
+    options:
+      - "Solar breeze"
+      - "Solar flare"
+      - "Solar wind"
+      - "Solar radiation"
+    correctAnswer: "Solar wind"
+
+  - question: "How many planets are in our solar system?"
+    options:
+      - "8"
+      - "9"
+      - "10"
+      - "11"
+    correctAnswer: "8"
+
+  - question: "Which constellation contains the North Star?"
+    options:
+      - "Orion"
+      - "Ursa Major"
+      - "Ursa Minor"
+      - "Cassiopeia"
+    correctAnswer: "Ursa Minor"

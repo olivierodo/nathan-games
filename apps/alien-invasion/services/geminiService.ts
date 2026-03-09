@@ -1,10 +1,7 @@
-import { GoogleGenAI, Type } from "@google/genai";
 import { TriviaData } from "../types";
 
-const apiKey = process.env.API_KEY || '';
-
-// Expanded Mock trivia to prevent repetition
-const MOCK_TRIVIA_BATCH: TriviaData[] = [
+// Pre-generated space trivia questions
+const TRIVIA_DATA: TriviaData[] = [
   {
     question: "Which planet is known as the Red Planet?",
     options: ["Venus", "Mars", "Jupiter", "Saturn"],
@@ -117,64 +114,17 @@ const shuffleArray = (array: TriviaData[]) => {
   return shuffled;
 };
 
+// Load trivia from pre-generated data (no API calls needed)
 export const fetchSpaceTriviaBatch = async (count: number): Promise<TriviaData[]> => {
-  if (!apiKey) {
-    console.warn("No API Key found, using mock trivia.");
-    // Return a shuffled list of mock trivia
-    const shuffled = shuffleArray(MOCK_TRIVIA_BATCH);
-    // Cycle if we need more than available
-    const result = [];
-    for(let i=0; i<count; i++) {
-        result.push(shuffled[i % shuffled.length]);
-    }
-    return result;
+  const shuffled = shuffleArray(TRIVIA_DATA);
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push(shuffled[i % shuffled.length]);
   }
-
-  try {
-    const ai = new GoogleGenAI({ apiKey });
-    
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Generate ${count} distinct, fun, and easy space-themed trivia questions for a 9-year-old kid. For each question provide 4 short options and the correct answer. Output as a JSON array.`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.ARRAY,
-          items: {
-            type: Type.OBJECT,
-            properties: {
-              question: { type: Type.STRING },
-              options: { 
-                type: Type.ARRAY, 
-                items: { type: Type.STRING },
-                description: "Array of 4 possible answers" 
-              },
-              correctAnswer: { type: Type.STRING }
-            },
-            required: ["question", "options", "correctAnswer"]
-          }
-        }
-      }
-    });
-
-    if (response.text) {
-      const data = JSON.parse(response.text) as TriviaData[];
-      return data;
-    }
-    return shuffleArray(MOCK_TRIVIA_BATCH);
-  } catch (error) {
-    console.error("Error fetching trivia batch:", error);
-    // Fallback logic
-    const shuffled = shuffleArray(MOCK_TRIVIA_BATCH);
-    const result = [];
-    for(let i=0; i<count; i++) {
-        result.push(shuffled[i % shuffled.length]);
-    }
-    return result;
-  }
+  return result;
 };
 
-// Deprecated single fetch (kept for compatibility if needed, but unused)
+// Deprecated single fetch (kept for compatibility)
 export const fetchSpaceTrivia = async (): Promise<TriviaData> => {
-    return MOCK_TRIVIA_BATCH[0];
+  return TRIVIA_DATA[0];
 };
