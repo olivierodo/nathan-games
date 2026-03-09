@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, readdirSync, rmSync } from 'fs';
+import { cpSync, mkdirSync, readdirSync, rmSync, existsSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -8,6 +8,7 @@ const outputDir = resolve(rootDir, 'dist');
 rmSync(outputDir, { recursive: true, force: true });
 mkdirSync(outputDir, { recursive: true });
 
+// Collect app builds
 const appsDir = resolve(rootDir, 'apps');
 const apps = readdirSync(appsDir);
 for (const app of apps) {
@@ -21,4 +22,35 @@ for (const app of apps) {
   }
 }
 
-console.log('Build artifacts collected to dist/');
+// Copy root files (portal + config)
+const rootFiles = ['index.html', 'CNAME'];
+for (const file of rootFiles) {
+  const sourceFile = resolve(rootDir, file);
+  if (existsSync(sourceFile)) {
+    const targetFile = resolve(outputDir, file);
+    try {
+      cpSync(sourceFile, targetFile);
+      console.log(`Copied: ${file} -> dist/${file}`);
+    } catch (err) {
+      console.warn(`Warning: Could not copy ${file}`);
+    }
+  }
+}
+
+// Copy screenshot assets (PNG files at root)
+const screenshotPattern = /\.png$/i;
+const rootFiles_list = readdirSync(rootDir);
+for (const file of rootFiles_list) {
+  if (screenshotPattern.test(file)) {
+    const sourceFile = resolve(rootDir, file);
+    const targetFile = resolve(outputDir, file);
+    try {
+      cpSync(sourceFile, targetFile);
+      console.log(`Copied: ${file} -> dist/${file}`);
+    } catch (err) {
+      console.warn(`Warning: Could not copy ${file}`);
+    }
+  }
+}
+
+console.log('✓ Build artifacts collected to dist/');
