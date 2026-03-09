@@ -37,19 +37,15 @@ for (const file of rootFiles) {
   }
 }
 
-// Copy screenshot assets (PNG files at root)
-const screenshotPattern = /\.png$/i;
-const rootFiles_list = readdirSync(rootDir);
-for (const file of rootFiles_list) {
-  if (screenshotPattern.test(file)) {
-    const sourceFile = resolve(rootDir, file);
-    const targetFile = resolve(outputDir, file);
-    try {
-      cpSync(sourceFile, targetFile);
-      console.log(`Copied: ${file} -> dist/${file}`);
-    } catch (err) {
-      console.warn(`Warning: Could not copy ${file}`);
-    }
+// Copy assets folder (screenshots and other static assets)
+const assetsDir = resolve(rootDir, 'assets');
+if (existsSync(assetsDir)) {
+  const targetAssetsDir = resolve(outputDir, 'assets');
+  try {
+    cpSync(assetsDir, targetAssetsDir, { recursive: true });
+    console.log(`Copied: assets/ -> dist/assets/`);
+  } catch (err) {
+    console.warn(`Warning: Could not copy assets folder`);
   }
 }
 
