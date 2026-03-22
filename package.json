@@ -11,6 +11,7 @@
     "dev:alien-invasion": "npm --workspace apps/alien-invasion run dev",
     "dev:fruit-escape": "npm --workspace apps/fruit-escape run dev",
     "dev:habitat-rescue": "npm --workspace apps/habitat-rescue run dev",
+    "dev:dino-escape": "npm --workspace apps/dino-escape run dev",
     "install:all": "npm install"
   }
 }

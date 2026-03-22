@@ -1,0 +1,5 @@
+{
+  "name": "Dino Escape",
+  "description": "A strategic 10x10 grid puzzle game where you guide a character to safety through a shifting jungle maze.",
+  "requestFramePermissions": []
+}

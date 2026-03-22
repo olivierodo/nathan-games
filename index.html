@@ -330,6 +330,15 @@
                 url: "/habitat-rescue/",
                 tags: ["Survival", "Strategy", "Puzzle"],
                 date: "2026-03-08",
+                isNew: false
+            },
+            {
+                title: "Dino Escape",
+                description: "A strategic 10x10 grid puzzle game where you guide a character to safety through a shifting jungle maze.",
+                image: "assets/dino-escape.png",
+                url: "/dino-escape/",
+                tags: ["Puzzle", "Strategy", "Maze"],
+                date: "2026-03-22",
                 isNew: true
             },
             // Add more games below! Copy this template:
@@ -351,6 +360,7 @@
             const grid = document.getElementById('gamesGrid');
             const countEl = document.getElementById('gameCount');
 
+            games.sort((a, b) => new Date(b.date) - new Date(a.date));
             countEl.textContent = `${games.length} Game${games.length !== 1 ? 's' : ''} Ready to Play!`;
 
             grid.innerHTML = games.map(game => `
