@@ -89,11 +89,10 @@ const apt3: FloorData = {
   hazards: [
     debris('d1', 280, 0),
     debris('d2', 520, 0.6),
-    wire('w1', 290, 304),
   ],
   npcs: [
-    npc('grandma', 320, 294, '👵'),
-    npc('dog1', 510, 254, '🐶'),
+    npc('grandma', 320, 292, '👵'),
+    npc('dog1', 510, 252, '🐶'),
   ],
   waterRiseSeconds: 24,
 };
@@ -142,9 +141,8 @@ const off2: FloorData = {
     debris('d1', 180, 0),
     debris('d2', 380, 0.5),
     debris('d3', 600, 1.0),
-    wire('w1', 260, 304),
   ],
-  npcs: [npc('boss', 430, 264, '🧑‍💼'), npc('cat2', 590, 204, '🐱')],
+  npcs: [npc('boss', 430, 262, '🧑‍💼'), npc('cat2', 590, 202, '🐱')],
   waterRiseSeconds: 22,
 };
 
@@ -171,9 +169,8 @@ const off3: FloorData = {
     debris('d2', 320, 0.4),
     debris('d3', 480, 0.8),
     spike('s1', 360, FLOOR_HEIGHT - 38),
-    wire('w1', 540, 254),
   ],
-  npcs: [npc('janitor', 565, 244, '🧑‍🔧'), npc('dog2', 480, 154, '🐕')],
+  npcs: [npc('janitor', 565, 242, '🧑‍🔧'), npc('dog2', 480, 152, '🐕')],
   waterRiseSeconds: 20,
 };
 
@@ -233,15 +230,14 @@ const sky2: FloorData = {
     debris('d2', 320, 0.3),
     debris('d3', 480, 0.7),
     debris('d4', 640, 1.1),
-    wire('w1', 240, 324),
     spike('s1', 410, FLOOR_HEIGHT - 38),
   ],
   npcs: [
-    npc('scientist2', 510, 254, '🧑‍🔬'),
-    npc('dog3', 310, 214, '🐩'),
-    npc('bird1', 690, 164, '🦜'),
+    npc('scientist2', 510, 252, '🧑‍🔬'),
+    npc('dog3', 310, 212, '🐩'),
+    npc('bird1', 690, 162, '🦜'),
   ],
-  waterRiseSeconds: 17,
+  waterRiseSeconds: 19,
 };
 
 const sky3: FloorData = {
@@ -270,16 +266,14 @@ const sky3: FloorData = {
     debris('d3', 420, 0.55),
     debris('d4', 560, 0.85),
     debris('d5', 700, 1.15),
-    wire('w1', 220, 324),
-    wire('w2', 440, 264),
     spike('s1', 350, FLOOR_HEIGHT - 38),
   ],
   npcs: [
-    npc('mom', 470, 184, '👩'),
-    npc('dad', 295, 194, '👨'),
-    npc('sibling', 580, 224, '🧒'),
+    npc('mom', 470, 172, '👩'),
+    npc('dad', 295, 192, '👨'),
+    npc('sibling', 580, 222, '🧒'),
   ],
-  waterRiseSeconds: 15,
+  waterRiseSeconds: 18,
 };
 
 export const BUILDINGS: BuildingData[] = [

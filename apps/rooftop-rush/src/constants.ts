@@ -5,8 +5,8 @@ export const FLOOR_HEIGHT = 480;
 // Player physics
 export const PLAYER_WIDTH = 32;
 export const PLAYER_HEIGHT = 44;
-export const MOVE_SPEED = 220;          // px / s horizontal
-export const JUMP_VELOCITY = 520;       // initial upward velocity (px / s)
+export const MOVE_SPEED = 240;          // px / s horizontal
+export const JUMP_VELOCITY = 620;       // initial upward velocity (px / s) — max jump ≈ 128 px
 export const GRAVITY = 1500;            // px / s^2
 export const MAX_FALL_SPEED = 900;
 export const GROUND_FRICTION = 0.82;    // applied each frame when no input
