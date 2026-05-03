@@ -12,6 +12,7 @@
     "dev:fruit-escape": "npm --workspace apps/fruit-escape run dev",
     "dev:habitat-rescue": "npm --workspace apps/habitat-rescue run dev",
     "dev:dino-escape": "npm --workspace apps/dino-escape run dev",
+    "dev:rooftop-rush": "npm --workspace apps/rooftop-rush run dev",
     "install:all": "npm install"
   }
 }

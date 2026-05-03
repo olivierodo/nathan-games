@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-flood-deep: #0b3a5c;
+  --color-flood-mid: #126a9a;
+  --color-flood-foam: #6cc9f7;
+  --color-sky-warm: #ffd9a8;
+  --color-sky-pink: #ff9bb8;
+  --color-brick: #8c4a3a;
+  --color-brick-dark: #5a2e25;
+  --color-window: #ffe27a;
+  --color-window-dim: #6e7a8a;
+  --color-steel: #2c3744;
+  --color-steel-light: #5a6877;
+  --color-glass: #b9e2ff;
+  --color-debris: #6a4a2c;
+  --color-spark: #ffd166;
+}
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+  }
+  body {
+    @apply bg-flood-deep text-white overflow-hidden font-sans;
+    background:
+      linear-gradient(180deg, #ffd9a8 0%, #ff9bb8 35%, #126a9a 75%, #0b3a5c 100%);
+    background-attachment: fixed;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* === Building / floor backdrops === */
+
+.theme-apartment .floor-stage {
+  background: linear-gradient(180deg, #f5d7b1 0%, #efb990 100%);
+}
+.theme-apartment .platform {
+  background:
+    repeating-linear-gradient(90deg, #8c4a3a 0 14px, #6e3a2c 14px 16px),
+    #8c4a3a;
+  border-top: 3px solid #efc198;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+}
+.theme-apartment .ground {
+  background: linear-gradient(180deg, #6e3a2c 0%, #3d1f17 100%);
+  border-top: 3px solid #efc198;
+}
+
+.theme-office .floor-stage {
+  background: linear-gradient(180deg, #b9c8d8 0%, #7d92a5 100%);
+}
+.theme-office .platform {
+  background: linear-gradient(180deg, #5a6877 0%, #2c3744 100%);
+  border-top: 3px solid #b9e2ff;
+}
+.theme-office .ground {
+  background: linear-gradient(180deg, #2c3744 0%, #11161e 100%);
+  border-top: 3px solid #b9e2ff;
+}
+
+.theme-skyscraper .floor-stage {
+  background: linear-gradient(180deg, #2c3744 0%, #0b1320 100%);
+}
+.theme-skyscraper .platform {
+  background: linear-gradient(180deg, #b9e2ff 0%, #6cc9f7 100%);
+  border-top: 3px solid #ffffff;
+  box-shadow: 0 0 18px rgba(108, 201, 247, 0.45);
+}
+.theme-skyscraper .ground {
+  background: linear-gradient(180deg, #6cc9f7 0%, #126a9a 100%);
+  border-top: 3px solid #ffffff;
+}
+
+/* === Water === */
+
+.water-surface {
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 12px, rgba(255,255,255,0) 12px 24px),
+    linear-gradient(180deg, #6cc9f7 0%, #126a9a 60%, #0b3a5c 100%);
+  box-shadow: 0 -4px 14px rgba(108, 201, 247, 0.7);
+  border-top: 3px solid rgba(255,255,255,0.6);
+}
+
+@keyframes water-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.water-bob { animation: water-bob 1.4s ease-in-out infinite; }
+
+/* === Hazards === */
+
+@keyframes spark {
+  0%, 100% { opacity: 0.9; box-shadow: 0 0 6px #ffd166, 0 0 18px #ffd166; }
+  50% { opacity: 0.4; box-shadow: 0 0 2px #ffd166; }
+}
+.wire-hazard {
+  background: repeating-linear-gradient(
+    45deg,
+    #ffd166 0 6px,
+    #b08020 6px 12px
+  );
+  animation: spark 0.4s ease-in-out infinite;
+  border-radius: 3px;
+}
+
+.spike-hazard {
+  background:
+    linear-gradient(135deg, transparent 33%, #444 33% 66%, transparent 66%) 0 0/14px 14px,
+    linear-gradient(225deg, transparent 33%, #444 33% 66%, transparent 66%) 0 0/14px 14px,
+    #888;
+}
+
+.debris-hazard {
+  background: radial-gradient(circle at 35% 35%, #8d6a45 0%, #4a3320 70%, #2c1f10 100%);
+  border-radius: 6px;
+  box-shadow: inset -3px -3px 0 rgba(0,0,0,0.3);
+}
+
+/* === Player === */
+
+.player-shadow {
+  filter: drop-shadow(0 4px 0 rgba(0,0,0,0.25));
+}
+@keyframes player-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+.player-walking { animation: player-bob 0.18s linear infinite; }
+
+/* === NPCs === */
+
+@keyframes npc-wave {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-4px) rotate(5deg); }
+}
+.npc-wave { animation: npc-wave 0.9s ease-in-out infinite; }
+
+/* === Exit (staircase) === */
+
+.staircase {
+  background:
+    repeating-linear-gradient(180deg, #ffe27a 0 14px, #c89c1b 14px 18px),
+    #c89c1b;
+  border: 3px solid #4a3210;
+  box-shadow: 0 0 20px rgba(255, 226, 122, 0.6);
+}
+
+@keyframes staircase-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 226, 122, 0.6); }
+  50% { box-shadow: 0 0 36px rgba(255, 226, 122, 0.9); }
+}
+.staircase-pulse { animation: staircase-pulse 1.2s ease-in-out infinite; }
+
+/* === Touch buttons === */
+
+.touch-btn {
+  @apply rounded-full bg-white/15 backdrop-blur-sm border-2 border-white/40 text-white font-bold flex items-center justify-center;
+  width: 80px;
+  height: 80px;
+  font-size: 36px;
+  transition: transform 60ms ease, background 80ms ease;
+}
+.touch-btn:active {
+  background: rgba(255,255,255,0.4);
+  transform: scale(0.92);
+}
+
+/* === Shake on hit === */
+
+@keyframes hit-shake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-6px, 0); }
+  75% { transform: translate(6px, 0); }
+}
+.hit-shake { animation: hit-shake 0.18s ease-in-out 2; }
+
+/* === Title screen === */
+
+.title-card {
+  background: rgba(11, 58, 92, 0.85);
+  backdrop-filter: blur(8px);
+  border: 3px solid rgba(108, 201, 247, 0.6);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.title-pulse {
+  text-shadow: 0 0 24px rgba(108, 201, 247, 0.8);
+}
